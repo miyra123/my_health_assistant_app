@@ -8,7 +8,7 @@ import 'add_medication_screen.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  /// 🔹 كرت جميل بدل زر
+
   Widget buildCard(BuildContext context, String text, IconData icon, Widget page) {
     return GestureDetector(
       onTap: () {
@@ -71,7 +71,7 @@ class HomeScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            /// 🔥 Header (لوجو + ترحيب)
+
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(20),
@@ -93,7 +93,7 @@ class HomeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [
                       Text(
-                        "Welcome 👋",
+                        "Welcome ",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -116,7 +116,7 @@ class HomeScreen extends StatelessWidget {
 
             const SizedBox(height: 25),
 
-            /// 🔥 Grid مرتب
+
             Expanded(
               child: GridView.count(
                 crossAxisCount: 2,

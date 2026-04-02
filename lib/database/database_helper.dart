@@ -39,6 +39,15 @@ class DatabaseHelper {
   ''');
 
     await db.execute('''
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT UNIQUE,
+  password TEXT,
+  failed_attempts INTEGER DEFAULT 0,
+  is_blocked INTEGER DEFAULT 0
+)
+''');
+    await db.execute('''
   CREATE TABLE medications(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
@@ -119,6 +128,52 @@ CREATE TABLE records (
       'medications',
       where: 'id = ?',
       whereArgs: [id],
+    );
+  }
+  Future<Map<String, dynamic>?> getUserByUsername(String username) async {
+    final db = await database;
+    final result = await db.query(
+      'users',
+      where: 'username = ?',
+      whereArgs: [username],
+    );
+
+    if (result.isNotEmpty) {
+      return result.first;
+    }
+    return null;
+  }
+
+  Future<void> updateFailedAttempts(String username, int attempts) async {
+    final db = await database;
+    await db.update(
+      'users',
+      {'failed_attempts': attempts},
+      where: 'username = ?',
+      whereArgs: [username],
+    );
+  }
+
+  Future<void> blockUser(String username) async {
+    final db = await database;
+    await db.update(
+      'users',
+      {'is_blocked': 1},
+      where: 'username = ?',
+      whereArgs: [username],
+    );
+  }
+
+  Future<void> resetFailedAttempts(String username) async {
+    final db = await database;
+    await db.update(
+      'users',
+      {
+        'failed_attempts': 0,
+        'is_blocked': 0,
+      },
+      where: 'username = ?',
+      whereArgs: [username],
     );
   }
 }

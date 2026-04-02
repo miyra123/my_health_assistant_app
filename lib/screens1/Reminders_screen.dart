@@ -17,7 +17,7 @@ class _RemindersScreenState extends State<RemindersScreen> {
     loadReminders();
   }
 
-  // 🔹 تحميل البيانات
+
   Future<void> loadReminders() async {
     final data = await DatabaseHelper.instance.getMedications();
     setState(() {
@@ -25,7 +25,7 @@ class _RemindersScreenState extends State<RemindersScreen> {
     });
   }
 
-  // 🔹 حذف
+
   Future<void> deleteReminder(int id, int index) async {
     await DatabaseHelper.instance.deleteMedication(id);
 

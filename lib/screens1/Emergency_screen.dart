@@ -20,7 +20,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
     loadNumber();
   }
 
-  // 🔹 تحميل الرقم
+
   Future<void> loadNumber() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -28,7 +28,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
     });
   }
 
-  // 🔹 حفظ الرقم
+
   Future<void> saveNumber() async {
     if (phoneController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -48,8 +48,6 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
       const SnackBar(content: Text("Number saved")),
     );
   }
-
-  // 📍 جلب الموقع
   Future<String> getLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -73,7 +71,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
     return "https://maps.google.com/?q=${position.latitude},${position.longitude}";
   }
 
-  // 🚨 SOS (اتصال + SMS + موقع)
+
   Future<void> callSOS() async {
     if (savedNumber.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -82,13 +80,13 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
       return;
     }
 
-    // 📍 الموقع
+
     String location = await getLocation();
 
     String message =
-        "🚨 EMERGENCY!\nI need help!\nLocation:\n$location";
+        " EMERGENCY!\nI need help!\nLocation:\n$location";
 
-    // 📩 إرسال SMS
+
     final Uri sms = Uri.parse(
         "sms:$savedNumber?body=${Uri.encodeComponent(message)}");
 
@@ -96,7 +94,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
       await launchUrl(sms);
     }
 
-    // 📞 اتصال
+
     final Uri phone = Uri.parse("tel:$savedNumber");
 
     if (await canLaunchUrl(phone)) {
@@ -115,7 +113,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            // 🔹 إدخال الرقم
+
             TextField(
               controller: phoneController,
               keyboardType: TextInputType.phone,
@@ -127,7 +125,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
 
             const SizedBox(height: 15),
 
-            // 🔹 زر حفظ الرقم
+
             ElevatedButton(
               onPressed: saveNumber,
               child: const Text("Save Number"),
@@ -143,7 +141,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
 
             const SizedBox(height: 40),
 
-            // 🔴 زر SOS احترافي
+
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,

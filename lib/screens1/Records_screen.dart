@@ -69,7 +69,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
-                /// 🔹 input
+
                 TextField(
                   controller: recordController,
                   decoration: const InputDecoration(
@@ -80,7 +80,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
 
                 const SizedBox(height: 15),
 
-                /// 🔹 select date
+
                 ElevatedButton(
                   onPressed: () async {
                     DateTime tempDate = DateTime.now();
@@ -131,7 +131,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
 
                 const SizedBox(height: 15),
 
-                /// 🔹 add button
+
                 ElevatedButton(
                   onPressed: addRecord,
                   child: const Text("Add Record"),
@@ -139,7 +139,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
 
                 const SizedBox(height: 20),
 
-                /// 🔹 records list
+
                 records.isEmpty
                     ? const Text("No records yet")
                     : ListView.builder(
@@ -156,7 +156,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
                         title: Text(record['title']),
                         subtitle: Text(record['date']),
 
-                        /// 🔥 زر الحذف
+
                         trailing: IconButton(
                           icon: const Icon(Icons.delete, color: Colors.red),
                           onPressed: () {

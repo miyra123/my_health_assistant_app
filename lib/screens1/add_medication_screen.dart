@@ -95,7 +95,7 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
                 Duration delay = scheduledTime.difference(now);
 
                 if (delay.isNegative) {
-                  delay = const Duration(seconds: 10); // اختبار سريع
+                  delay = const Duration(seconds: 10);
                 }
 
 
