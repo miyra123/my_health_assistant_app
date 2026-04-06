@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../database/database_helper.dart';
+import '../utils/encryption_helper.dart'; // 🔥 مهم
 
 class RecordsScreen extends StatefulWidget {
   const RecordsScreen({super.key});
@@ -35,8 +36,12 @@ class _RecordsScreenState extends State<RecordsScreen> {
       return;
     }
 
+    // 🔐 تشفير قبل التخزين
+    String encryptedText =
+    EncryptionHelper.encrypt(recordController.text);
+
     await DatabaseHelper.instance.insertRecord({
-      "title": recordController.text,
+      "title": encryptedText, // 🔥 نخزن مشفر
       "date": selectedDate.toString(),
     });
 
@@ -69,7 +74,8 @@ class _RecordsScreenState extends State<RecordsScreen> {
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
-//
+
+                // 🟦 Input
                 TextField(
                   controller: recordController,
                   decoration: const InputDecoration(
@@ -79,7 +85,6 @@ class _RecordsScreenState extends State<RecordsScreen> {
                 ),
 
                 const SizedBox(height: 15),
-
 
                 ElevatedButton(
                   onPressed: () async {
@@ -125,12 +130,11 @@ class _RecordsScreenState extends State<RecordsScreen> {
                   child: Text(
                     selectedDate == null
                         ? "Select Date"
-                        : "Date: ${selectedDate!.toLocal().toString().split(' ')[0]}",
+                        : "Date: ${selectedDate!.toLocal().toString().split(' ')[0]}"
                   ),
                 ),
 
                 const SizedBox(height: 15),
-
 
                 ElevatedButton(
                   onPressed: addRecord,
@@ -139,10 +143,8 @@ class _RecordsScreenState extends State<RecordsScreen> {
 
                 const SizedBox(height: 20),
 
-
-                records.isEmpty
-                    ? const Text("No records yet")
-                    : ListView.builder(
+                // 🟩 عرض البيانات
+                ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: records.length,
@@ -153,9 +155,23 @@ class _RecordsScreenState extends State<RecordsScreen> {
                       child: ListTile(
                         leading: const Icon(Icons.medical_services),
 
-                        title: Text(record['title']),
-                        subtitle: Text(record['date']),
+                        // 🔥 هنا السحر
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "🔒 Encrypted: ${record['title']}",
+                              style: const TextStyle(color: Colors.grey),
+                            ),
+                            Text(
+                              "🔓 Decrypted: ${EncryptionHelper.decrypt(record['title'])}",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
 
+                        subtitle: Text(record['date']),
 
                         trailing: IconButton(
                           icon: const Icon(Icons.delete, color: Colors.red),
