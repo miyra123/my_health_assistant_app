@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../database/database_helper.dart';
-import '../utils/encryption_helper.dart'; // 🔥 مهم
+import '../utils/encryption_helper.dart';
 
 class RecordsScreen extends StatefulWidget {
   const RecordsScreen({super.key});
@@ -36,12 +36,12 @@ class _RecordsScreenState extends State<RecordsScreen> {
       return;
     }
 
-    // 🔐 تشفير قبل التخزين
+
     String encryptedText =
     EncryptionHelper.encrypt(recordController.text);
 
     await DatabaseHelper.instance.insertRecord({
-      "title": encryptedText, // 🔥 نخزن مشفر
+      "title": encryptedText,
       "date": selectedDate.toString(),
     });
 
@@ -75,7 +75,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
             child: Column(
               children: [
 
-                // 🟦 Input
+
                 TextField(
                   controller: recordController,
                   decoration: const InputDecoration(
@@ -143,7 +143,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
 
                 const SizedBox(height: 20),
 
-                // 🟩 عرض البيانات
+
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -155,7 +155,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
                       child: ListTile(
                         leading: const Icon(Icons.medical_services),
 
-                        // 🔥 هنا السحر
+
                         title: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
